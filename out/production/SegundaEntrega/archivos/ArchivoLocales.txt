@@ -1,0 +1,3 @@
+McDonalds,comida,centro,4
+Farmashop,farmacia,centro,6
+Pizzeria,comida,prado,3
