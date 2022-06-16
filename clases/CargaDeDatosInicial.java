@@ -4,7 +4,8 @@ import manejadoresDeArchivos.ManejadorArchivosGenerico;
 import java.util.LinkedList;
 
 public class CargaDeDatosInicial {
-    private LinkedList<Local> Locales = new LinkedList<Local>();
+    private LinkedList<Local> Locales = new LinkedList<Local>(); // no se usa por el momento
+    private LinkedList<Zona> Zonas=new LinkedList<Zona>(); // no se usa por el momento, solo contiene las zonas creadas en la lista
     private LinkedList<Pedido> Pedidos = new LinkedList<Pedido>();
     private LinkedList<Repartidor> Repartidores = new LinkedList<Repartidor>();
     private String[] catalogoComidas = ManejadorArchivosGenerico.leerArchivo("archivos/ArchivoProductosComida.txt");
@@ -14,30 +15,48 @@ public class CargaDeDatosInicial {
         cargaInicialLocales();
         cargaInicialPedidos();
         cargaInicialRepartidores();
-        for (Local local : Locales) {
-            System.out.println(local.getNombre());
-        }
+
 
         for (Pedido pedido : Pedidos) {
-            System.out.println(pedido.getNombre());
+            System.out.println("Pedido:"+ " " + pedido.getNombre());
         }
 
         for (Repartidor repartidor : Repartidores) {
-            System.out.println(repartidor.getNombre());
+            System.out.println("Repartidor:"+ " " + repartidor.getNombre());
+        }
+        for(Zona zona:Zonas) {
+
+            if (zona.getLocales() != null) {
+                for (Local local : zona.getLocales()) {
+                    System.out.println("zona: " + zona.getNombre() +" " + "Local: " +local.getNombre());
+
+                }
+            }
         }
     }
+
 
     private void cargaInicialLocales() {
 
         String[] localesLineas = ManejadorArchivosGenerico.leerArchivo("archivos/ArchivoLocales.txt");
         for (String linea : localesLineas){
             String[] datosLocales = linea.split(",");
-            Local nuevoLocal = new Local(Integer.parseInt(datosLocales[0]));
+            Zona zonaLocal= new Zona(datosLocales[1]); //creamos la zona del local
+            Local nuevoLocal = new Local(Integer.parseInt(datosLocales[0]), zonaLocal); //creamos el local y cargamos sus datos
             nuevoLocal.setCatalogo(getCatalogo(datosLocales[1]));
-            nuevoLocal.setNombre(datosLocales[1]);
-            nuevoLocal.setCategoria(datosLocales[2]);
-            nuevoLocal.setLimiteDePedidosEnPreparacion(Integer.parseInt(datosLocales[3]));
-            Locales.add(nuevoLocal);
+            nuevoLocal.setNombre(datosLocales[2]);
+            nuevoLocal.setCategoria(datosLocales[3]);
+            nuevoLocal.setLimiteDePedidosEnPreparacion(Integer.parseInt(datosLocales[4]));
+            if(zonaLocal.getLocales()==null){
+                LinkedList<Local> localZona= new LinkedList<>();
+                zonaLocal.setLocales(localZona);
+                localZona.add(nuevoLocal);//agregamos el local a la lista de locales de la zona
+            }else {
+                zonaLocal.getLocales().add(nuevoLocal);
+            }
+            if( !Zonas.contains(zonaLocal)){ //agregamos la zona a la lista de zonas
+                Zonas.add(zonaLocal);
+            }
         }
     }
 

@@ -11,15 +11,18 @@ public class Local {
 
     private String nombre;
     private String categoria;
+
+    private Zona zonaLocal;
     private int limiteDePedidosEnPreparacion;
     private final int idLocal; //usamos id porque puede repetirse el nombre del local (franquicias)
     
-    public Local(int id){
+    public Local(int id, Zona zona){
         this.nombre=nombre;
         this.categoria=categoria;
         this.limiteDePedidosEnPreparacion = limiteDePedidosEnPreparacion;
         this.catalogo = catalogo;
         this.idLocal=id;
+        this.zonaLocal=zona;
     }
 
     public void setNombre(String nombre) {
@@ -48,6 +51,9 @@ public class Local {
 
     public String getNombre(){
         return nombre;
+    }
+    public int getId(){
+        return idLocal;
     }
 
     public String getCategoria(){
