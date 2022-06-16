@@ -32,7 +32,11 @@ public class CargaDeDatosInicial {
         String[] localesLineas = ManejadorArchivosGenerico.leerArchivo("archivos/ArchivoLocales.txt");
         for (String linea : localesLineas){
             String[] datosLocales = linea.split(",");
-            Local nuevoLocal = new Local(datosLocales[0], datosLocales[1], datosLocales[2], Integer.parseInt(datosLocales[3]), getCatalogo(datosLocales[1]));
+            Local nuevoLocal = new Local(Integer.parseInt(datosLocales[0]));
+            nuevoLocal.setCatalogo(getCatalogo(datosLocales[1]));
+            nuevoLocal.setNombre(datosLocales[1]);
+            nuevoLocal.setCategoria(datosLocales[2]);
+            nuevoLocal.setLimiteDePedidosEnPreparacion(Integer.parseInt(datosLocales[3]));
             Locales.add(nuevoLocal);
         }
     }

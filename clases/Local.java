@@ -7,18 +7,43 @@ public class Local {
     private LinkedList<Pedido> PedidosRecibidos;
     private LinkedList<Pedido> PedidosEnPreparacion;
     private LinkedList<Pedido> PedidosCompletados;
-    private String[] Catalogo;
+    private String[] catalogo;
+
     private String nombre;
     private String categoria;
-    private String zona;
     private int limiteDePedidosEnPreparacion;
+    private final int idLocal; //usamos id porque puede repetirse el nombre del local (franquicias)
     
-    public Local(String nombre,String categoria,String zona, int limiteDePedidosEnPreparacion, String[] catalogo){
+    public Local(int id){
         this.nombre=nombre;
         this.categoria=categoria;
-        this.zona=zona;
         this.limiteDePedidosEnPreparacion = limiteDePedidosEnPreparacion;
-        this.Catalogo = catalogo;
+        this.catalogo = catalogo;
+        this.idLocal=id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCatalogo(String[] catalogo) {
+        this.catalogo = catalogo;
+    }
+
+    public void setPedidosCompletados(LinkedList<Pedido> pedidosCompletados) {
+        PedidosCompletados = pedidosCompletados;
+    }
+
+    public void setLimiteDePedidosEnPreparacion(int limiteDePedidosEnPreparacion) {
+        this.limiteDePedidosEnPreparacion = limiteDePedidosEnPreparacion;
+    }
+
+    public void setPedidosRecibidos(LinkedList<Pedido> pedidosRecibidos) {
+        PedidosRecibidos = pedidosRecibidos;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public String getNombre(){
@@ -29,12 +54,8 @@ public class Local {
         return categoria;
     }
 
-    public String getZona() {
-        return zona;
-    }
-
     public String[] getCatalogo(){
-        return Catalogo;
+        return catalogo;
     }
 
     public void RecibirPedido(Pedido pedido){

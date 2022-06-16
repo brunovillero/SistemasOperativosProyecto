@@ -1,3 +1,3 @@
-McDonalds,comida,centro,4
-Farmashop,farmacia,centro,6
-Pizzeria,comida,prado,3
+123,McDonalds,comida,4
+4234,Farmashop,farmacia,6
+23523,Pizzeria,comida,3
