@@ -10,8 +10,10 @@ public class CargaDeDatosInicial {
    private LinkedList<Local> Locales = new LinkedList<Local>();// agregamos locales creados
    private LinkedList<Pedido> Pedidos = new LinkedList<Pedido>();// agregamos pedidos creados
    private LinkedList<Repartidor> Repartidores = new LinkedList<Repartidor>();// agregamos repartidores creados
+    //private LinkedList<Cliente> Clientes=new LinkedList<>();// agregamos clientes creados
 
     private LinkedList<Zona> Zonas = new LinkedList<Zona>();// agregamos zonas creados
+    private HashMap<Integer,Cliente> Clientes=new HashMap<>();
 
    private String[] catalogoComidas = ManejadorArchivosGenerico.leerArchivo("archivos/ArchivoProductosComida.txt");
    private String[] catalogoProductosDeFarmacia = ManejadorArchivosGenerico.leerArchivo("archivos/ArchivoProductosFarmacia.txt");
@@ -19,6 +21,7 @@ public class CargaDeDatosInicial {
 
     public CargaDeDatosInicial() {
         cargarZonas();
+        cargaClientes();
         cargaInicialLocales();
         cargaInicialPedidos();
         cargaInicialRepartidores();
@@ -26,7 +29,7 @@ public class CargaDeDatosInicial {
 
 
         for (Pedido pedido : Pedidos) {
-            System.out.println("Cliente:"+ " " + pedido.getCliente().getNombre()+ " " + "Zona: " +pedido.getZona().getNombre()+ " " + "Local: "+ pedido.getLocal().getNombre() );//+pedido.getLocal().getNombre());
+            System.out.println("Cliente:"+ " " + pedido.getCliente().getNombre()+ " " + "loyalty: " +pedido.getCliente().getLoyalty()+ " " + "Local: "+ pedido.getLocal().getNombre() );
         }
 
         for (Repartidor repartidor : Repartidores) {
@@ -70,7 +73,7 @@ public class CargaDeDatosInicial {
             nuevoLocal.setLimiteDePedidosEnPreparacion(Integer.parseInt(datosLocales[4]));
             Zona zona=findZona(datosLocales[1].toLowerCase());
             nuevoLocal.setZonaLocal(zona);
-            zona.setLocal(nuevoLocal);
+            zona.setLocal(nuevoLocal);// se agrega local a la lista de locales de la zona
             Locales.add(nuevoLocal);
 
         }
@@ -91,6 +94,17 @@ public class CargaDeDatosInicial {
         }return null;
     }
 
+    public void cargaClientes(){
+        String[] lineasClientes = ManejadorArchivosGenerico.leerArchivo("archivos/ArchivoClientes.txt");
+        for (String linea : lineasClientes) {
+            String[] datosClientes = linea.split(",");
+            Cliente clienteNuevo = new Cliente(Integer.parseInt(datosClientes[0]), datosClientes[1]);
+            Clientes.put(Integer.parseInt(datosClientes[0]), clienteNuevo);
+        }
+
+
+        }
+
     private void cargaInicialPedidos() {
         String[] lineasPedidos = ManejadorArchivosGenerico.leerArchivo("archivos/ArchivoPedidos.txt");
         for (String linea : lineasPedidos) {
@@ -98,9 +112,12 @@ public class CargaDeDatosInicial {
             String[] datosProductosNombres = datosPedidos[3].split(";");
             String[] datosCantidadDeCadaProducto = datosPedidos[4].split(";");
             LinkedList<ProductoPedido> productosPedidos = crearProductosPedido(datosProductosNombres, datosCantidadDeCadaProducto);
-
-            Cliente cliente=new Cliente(Integer.parseInt(datosPedidos[0]),datosPedidos[1]);
+            Cliente cliente=Clientes.get(Integer.parseInt(datosPedidos[0]));
             Pedido pedido = new Pedido(cliente, productosPedidos);
+            pedido.setCliente(cliente);
+            pedido.setLoyaltyCliente(cliente);
+
+
             Zona zona=findZona(datosPedidos[3].toLowerCase());
             pedido.setZona(zona);
             Local localPedido=findLocal(Integer.parseInt(datosPedidos[2]));

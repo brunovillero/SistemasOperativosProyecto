@@ -1,7 +1,7 @@
 package clases;
 
 public class Prioridad {
-    private final String criterio;
+    private String criterio;
     private int prioridad;
 
     public Prioridad(String criterio,int prioridad){
@@ -12,14 +12,18 @@ public class Prioridad {
     public int getPrioridad() {
         return prioridad;
     }
+    public void setCriterio(String criterio){
+        this.criterio=criterio;
+    }
     public void setPrioridad() {
         if (this.criterio == "farmacia") {
             this.prioridad = 1;
         }
         if (this.criterio == "cliente frecuente") {
             this.prioridad = 2;
+        } else {
+            this.prioridad = 0;
         }
-
     }
 }
 

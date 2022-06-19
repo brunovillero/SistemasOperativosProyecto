@@ -18,6 +18,13 @@ public class Pedido {
         this.zona=zona;
     }
 
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    public void setLoyaltyCliente(Cliente cliente){
+        cliente.setLoyalty();
+    }
+
     public Local getLocal() {return idlocal;
     }
 
