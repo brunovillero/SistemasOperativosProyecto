@@ -1,8 +1,9 @@
 package clases;
 
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
 
-public class Local {
+public class Local extends Thread{
     //Archivo de locales Formato:[¨nombre¨,¨categoría¨,¨zona¨,¨número de pedidos a preparar simultáneamente¨]
     private LinkedList<Pedido> PedidosRecibidos;
     private LinkedList<Pedido> PedidosEnPreparacion;
@@ -15,18 +16,25 @@ public class Local {
     private Zona zonaLocal;
     private int limiteDePedidosEnPreparacion;
     private final int idLocal; //usamos id porque puede repetirse el nombre del local (franquicias)
-    
-    public Local(int id, Zona zona){
+
+    public Local(int id){
         this.nombre=nombre;
         this.categoria=categoria;
         this.limiteDePedidosEnPreparacion = limiteDePedidosEnPreparacion;
         this.catalogo = catalogo;
         this.idLocal=id;
-        this.zonaLocal=zona;
+
     }
 
+    public Zona getZonaLocal(){
+        return zonaLocal;
+    }
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public void setZonaLocal(Zona zonaLocal) {
+        this.zonaLocal = zonaLocal;
     }
 
     public void setCatalogo(String[] catalogo) {
@@ -49,10 +57,11 @@ public class Local {
         this.categoria = categoria;
     }
 
+
     public String getNombre(){
         return nombre;
     }
-    public int getId(){
+    public int getIdLocal(){
         return idLocal;
     }
 
@@ -67,4 +76,6 @@ public class Local {
     public void RecibirPedido(Pedido pedido){
         PedidosRecibidos.add(pedido);
     }
+
+
 }

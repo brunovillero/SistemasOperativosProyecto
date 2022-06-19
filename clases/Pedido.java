@@ -4,27 +4,36 @@ import java.util.LinkedList;
 
 public class Pedido {
     //Archivo con los datos del pedido Formato:[¨nombre del cliente¨,¨local¨,¨zona¨,¨productos¨]
-    private String nombre;
-    private String local;
-    private String zona;
+    Cliente cliente;
+    private Local idlocal;
+    private Zona zona;
     private LinkedList<ProductoPedido> productos;
+    private Prioridad prioridad;
 
-    public Pedido(String nombre,String local,String zona,LinkedList<ProductoPedido> productos){
-        this.nombre = nombre;
-        this.local = local;
-        this.zona = zona;
+    public Pedido(Cliente cliente,LinkedList<ProductoPedido> productos){
+        this.cliente = cliente;
+        this.idlocal = idlocal;
         this.productos = productos;
+        this.prioridad=prioridad;
+        this.zona=zona;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Local getLocal() {return idlocal;
     }
 
-    public String getLocal() {
-        return local;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public String getZona() {
+    public void setLocal(Local local) {
+        this.idlocal = local;
+    }
+
+    public void setZona(Zona zona) {
+        this.zona = zona;
+    }
+
+    public Zona getZona() {
         return zona;
     }
 
