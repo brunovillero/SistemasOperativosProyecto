@@ -1,6 +1,7 @@
 package clases;
 
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
 
 public class Pedido {
     //Archivo con los datos del pedido Formato:[¨nombre del cliente¨,¨local¨,¨zona¨,¨productos¨,"prioridad"]
@@ -8,7 +9,9 @@ public class Pedido {
     private String local;
     private String zona;
     private int prioridad;
+    private Semaphore semaforoPedido = new Semaphore(1, true);
     private LinkedList<ProductoPedido> productos;
+    private Boolean PedidoEnviado = false;
 
     public Pedido(String nombre,String local,String zona,LinkedList<ProductoPedido> productos, int prioridad){
         this.nombre = nombre;
@@ -32,6 +35,18 @@ public class Pedido {
 
     public int getPrioridad(){
         return prioridad;
+    }
+
+    public Semaphore getSemaforo(){
+        return semaforoPedido;
+    }
+
+    public Boolean getPedidoEnviado(){
+        return PedidoEnviado;
+    }
+
+    public void setPedidoEnviado(Boolean enviado){
+        PedidoEnviado = enviado;
     }
 
     public LinkedList<ProductoPedido> getProductos() {

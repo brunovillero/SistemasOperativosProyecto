@@ -1,6 +1,7 @@
 package clases;
 
 import java.util.LinkedList;
+import clases.PlanificadorEnvios;
 
 public class Local extends Thread{
     //Archivo de locales Formato:[¨nombre¨,¨categoría¨,¨zona¨]
@@ -65,6 +66,6 @@ public class Local extends Thread{
             System.out.println(e.getMessage());
         }
         
-        PlanificadorLocales.getSemaforo().release();
+        //PlanificadorLocales.getSemaforo().release();
     }
 }

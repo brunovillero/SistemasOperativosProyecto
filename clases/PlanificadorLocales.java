@@ -5,7 +5,6 @@ import java.util.concurrent.Semaphore;
 
 public class PlanificadorLocales {
     private static LinkedList<Local> Locales;
-    private static Semaphore semaforoLocales = new Semaphore(1, true);
     
     public static void asignarPedidosALocales(LinkedList<Local> locales, LinkedList<Pedido> pedidos){
         for (Local local : locales) {
@@ -20,12 +19,7 @@ public class PlanificadorLocales {
 
     public static void PrepararPedidosEnSimultaneo() throws InterruptedException{
         for (Local local : Locales) {
-            semaforoLocales.acquire();
             local.run();
         }
-    }
-
-    public static Semaphore getSemaforo(){
-        return semaforoLocales;
     }
 }

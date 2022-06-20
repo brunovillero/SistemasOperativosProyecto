@@ -64,7 +64,11 @@ public class CargaDeDatosInicial {
         return Locales;
     }
 
-    public LinkedList<Pedido> getPedido(){
+    public LinkedList<Pedido> getPedidos(){
         return Pedidos;
+    }
+
+    public LinkedList<Repartidor> getRepartidores(){
+        return Repartidores;
     }
 }

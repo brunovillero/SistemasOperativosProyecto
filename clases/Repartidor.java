@@ -1,6 +1,5 @@
 package clases;
-
-import javax.swing.border.EmptyBorder;
+import java.util.concurrent.Semaphore;
 
 public class Repartidor extends Thread{
     //Archivo con todos los repartidores. Formato: [¨nombre del repartidor¨,¨zona¨]
@@ -26,17 +25,20 @@ public class Repartidor extends Thread{
         PedidoAsignado = pedidoAsignado;
     }
 
+    public Pedido getPedidoAsignado(){
+        return PedidoAsignado;
+    }
+
     public Boolean getEnviandoPedido(){
         return PedidoAsignado == null;
     }
 
     @Override
     public void run(){
-        try {
-            System.out.println("Enviando pedido a: " + PedidoAsignado.getNombre());
-        } catch (Exception e) {
-            System.out.println("");
-
-        }
+        System.out.println("Enviando pedido a: " + PedidoAsignado.getNombre());
+        System.out.println("Pedido enviado!");
+        PedidoAsignado.setPedidoEnviado(true);
+        PedidoAsignado.getSemaforo().release();
+        setPedidoAsignado(null);
     }
 }
