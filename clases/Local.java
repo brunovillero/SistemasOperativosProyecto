@@ -65,7 +65,5 @@ public class Local extends Thread{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
-        //PlanificadorLocales.getSemaforo().release();
     }
 }
