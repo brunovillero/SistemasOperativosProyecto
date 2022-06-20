@@ -1,24 +1,21 @@
 package clases;
 
 import java.util.LinkedList;
+import clases.PlanificadorEnvios;
 
-public class Local {
-    //Archivo de locales Formato:[¨nombre¨,¨categoría¨,¨zona¨,¨número de pedidos a preparar simultáneamente¨]
-    private LinkedList<Pedido> PedidosRecibidos;
-    private LinkedList<Pedido> PedidosEnPreparacion;
-    private LinkedList<Pedido> PedidosCompletados;
-    private String[] Catalogo;
+public class Local extends Thread{
+    //Archivo de locales Formato:[¨nombre¨,¨categoría¨,¨zona¨]
+    private LinkedList<Pedido> P1 = new LinkedList<>(); //prioridad 1
+    private LinkedList<Pedido> P2 = new LinkedList<>(); //prioridad 2
+    private LinkedList<Pedido> PedidosCompletados = new LinkedList<>();
     private String nombre;
     private String categoria;
     private String zona;
-    private int limiteDePedidosEnPreparacion;
     
-    public Local(String nombre,String categoria,String zona, int limiteDePedidosEnPreparacion, String[] catalogo){
+    public Local(String nombre,String categoria,String zona){
         this.nombre=nombre;
         this.categoria=categoria;
         this.zona=zona;
-        this.limiteDePedidosEnPreparacion = limiteDePedidosEnPreparacion;
-        this.Catalogo = catalogo;
     }
 
     public String getNombre(){
@@ -33,11 +30,40 @@ public class Local {
         return zona;
     }
 
-    public String[] getCatalogo(){
-        return Catalogo;
+    public void RecibirPedido(Pedido pedido){
+        System.out.println(pedido.getPrioridad());
+        switch (pedido.getPrioridad()) {
+            case 1:
+                P1.add(pedido);
+                break;
+            default:
+                P2.add(pedido);
+                break;
+        }
     }
 
-    public void RecibirPedido(Pedido pedido){
-        PedidosRecibidos.add(pedido);
+    public LinkedList<Pedido> getPedidoCompletados(){
+        return PedidosCompletados;
+    }
+
+    @Override
+    public void run(){
+        try {
+            while (!P1.isEmpty() || !P2.isEmpty()) {
+                System.out.println("Local: " + nombre + " Preparando Pedidos");
+                if(!P1.isEmpty()){
+                    Pedido head1 = P1.poll();
+                    System.out.println("Preparando pedido: " + head1.printPedido());
+                    PedidosCompletados.add(head1);
+                }
+                if(!P2.isEmpty()){
+                    Pedido head2 = P2.poll();
+                    System.out.println("Preparando pedido: " + head2.printPedido());
+                    PedidosCompletados.add(head2);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

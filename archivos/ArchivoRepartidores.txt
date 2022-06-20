@@ -1,4 +1,4 @@
-Juan,prado
-Pedro,centro
-Giulia,centro
-Maria,prado
+1,Juan,prado
+1,Pedro,centro
+1,Giulia,centro
+1,Maria,prado
