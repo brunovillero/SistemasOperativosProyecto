@@ -16,12 +16,11 @@ public class Main {
             System.out.println("No se pudo preparar pedidos en momento: 1");
         }
 
-        
+        PlanificadorEnvios.obtenerPedidosCompletadosYEnviarlos(nuevaCarga.getLocales());
+
         for (Local local : nuevaCarga.getLocales()) {
             System.out.println("Nombre del local: " + local.getNombre() + ", Pedidos Completos: " + local.getPedidoCompletados().size());
         }
-
-        PlanificadorEnvios.obtenerPedidosCompletadosYEnviarlos(nuevaCarga.getLocales());
     }
 
 }
